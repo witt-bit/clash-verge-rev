@@ -137,9 +137,13 @@ pub fn create_window() {
     .fullscreen(false)
     .min_inner_size(600.0, 520.0);
 
+    // let window_decoration = { Config::verge().data().enable_window_decoration };
+    // let enable_decoration: bool = window_decoration.unwrap_or(true);
+    // let use_window_decoration = true;
+    // println!("window decoration: {}",use_window_decoration);
     #[cfg(target_os = "windows")]
     let window = builder
-        .decorations(false)
+        .decorations(true)
         .additional_browser_args("--enable-features=msWebView2EnableDraggableRegions --disable-features=OverscrollHistoryNavigation,msExperimentalScrolling")
         .transparent(true)
         .inner_size(800.0, 636.0)
@@ -157,11 +161,14 @@ pub fn create_window() {
 
     #[cfg(target_os = "linux")]
     let window = builder
-        .decorations(false)
+        .decorations(true)
         .transparent(true)
         .inner_size(800.0, 642.0)
         .build()
         .unwrap();
+
+    let de: bool = window.is_decorated().unwrap();
+    println!("window decoration state : {}", de);
 
     let _ = window.restore_state(StateFlags::all());
 }

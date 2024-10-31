@@ -10,6 +10,7 @@ import { GuardState } from "./mods/guard-state";
 import { SysproxyViewer } from "./mods/sysproxy-viewer";
 import { TunViewer } from "./mods/tun-viewer";
 import { TooltipIcon } from "@/components/base/base-tooltip-icon";
+import getSystem from "@/utils/get-system";
 
 interface Props {
   onError?: (err: Error) => void;
@@ -38,12 +39,15 @@ const SettingSystem = ({ onError }: Props) => {
     enable_auto_launch,
     enable_silent_start,
     enable_system_proxy,
+    enable_window_decoration,
   } = verge ?? {};
 
   const onSwitchFormat = (_e: any, value: boolean) => value;
   const onChangeData = (patch: Partial<IVergeConfig>) => {
     mutateVerge({ ...verge, ...patch }, false);
   };
+
+  const OS = getSystem();
 
   return (
     <SettingList title={t("System Setting")}>
@@ -127,6 +131,24 @@ const SettingSystem = ({ onError }: Props) => {
           <Switch edge="end" />
         </GuardState>
       </SettingItem>
+
+      {OS !== "macos" && (
+        <SettingItem
+          label={t("Use Window Decoration")}
+          extra={<TooltipIcon title={t("Use Window Decoration Info")} />}
+        >
+          <GuardState
+            value={enable_window_decoration}
+            valueProps="checked"
+            onCatch={onError}
+            onFormat={onSwitchFormat}
+            onChange={(e) => onChangeData({ enable_window_decoration: e })}
+            onGuard={(e) => patchVerge({ enable_window_decoration: e })}
+          >
+            <Switch edge="end" />
+          </GuardState>
+        </SettingItem>
+      )}
     </SettingList>
   );
 };

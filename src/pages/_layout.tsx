@@ -42,7 +42,7 @@ const Layout = () => {
   const { theme } = useCustomTheme();
 
   const { verge } = useVerge();
-  const { language, start_page } = verge || {};
+  const { language, start_page, enable_window_decoration } = verge || {};
   const navigate = useNavigate();
   const location = useLocation();
   const routersEles = useRoutes(routers);
@@ -184,16 +184,16 @@ const Layout = () => {
           </div>
 
           <div className="layout__right">
-            {
+            {enable_window_decoration && (
               <div className="the-bar">
                 <div
                   className="the-dragbar"
                   data-tauri-drag-region="true"
                   style={{ width: "100%" }}
                 ></div>
-                {OS !== "macos" && <LayoutControl />}
+                <LayoutControl />
               </div>
-            }
+            )}
 
             <TransitionGroup className="the-content">
               <CSSTransition

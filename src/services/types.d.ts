@@ -704,6 +704,7 @@ interface IVergeConfig {
   enable_auto_launch?: boolean;
   enable_service_mode?: boolean;
   enable_silent_start?: boolean;
+  enable_window_decoration?: boolean;
   enable_system_proxy?: boolean;
   proxy_auto_config?: boolean;
   pac_file_content?: string;
